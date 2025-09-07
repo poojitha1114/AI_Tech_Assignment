@@ -5,7 +5,7 @@ import os
 import os
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("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"))
+client = OpenAI(api_key=os.getenv("OPENAPI_KEY"))
 
 # Configure Streamlit page
 st.set_page_config(
