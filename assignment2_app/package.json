@@ -1,0 +1,17 @@
+{
+  "name": "ai-task-manager",
+  "version": "1.0.0",
+  "description": "A modern AI-powered task management web application",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx live-server --port=3000"
+  },
+  "keywords": ["task-manager", "ai", "productivity", "web-app"],
+  "author": "AI Task Manager Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  }
+}

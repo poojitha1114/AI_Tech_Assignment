@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-brain"></i>
+                    AI Task Manager
+                </h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addTaskBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Task
+                    </button>
+                    <button class="btn btn-secondary" id="aiSuggestBtn">
+                        <i class="fas fa-lightbulb"></i>
+                        AI Suggestions
+                    </button>
+                    <button class="btn btn-secondary" id="dailySummaryBtn">
+                        <i class="fas fa-chart-line"></i>
+                        Daily Summary
+                    </button>
+                    <button class="btn btn-theme-toggle" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- AI Insights Panel -->
+            <section class="ai-insights">
+                <div class="insight-card" id="priorityRecommendation">
+                    <div class="insight-header">
+                        <i class="fas fa-star"></i>
+                        <h3>Priority Recommendation</h3>
+                    </div>
+                    <p id="priorityText">Focus on high-priority tasks first to maximize productivity.</p>
+                </div>
+                
+                <div class="insight-card" id="aiSuggestions">
+                    <div class="insight-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI Suggestions</h3>
+                    </div>
+                    <div id="suggestionsContainer">
+                        <p>AI will suggest tasks based on your patterns...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Task Filters -->
+            <section class="task-filters">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">All Tasks</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+                <div class="filter-group">
+                    <button class="priority-filter" data-priority="all">All Priorities</button>
+                    <button class="priority-filter high" data-priority="high">High</button>
+                    <button class="priority-filter medium" data-priority="medium">Medium</button>
+                    <button class="priority-filter low" data-priority="low">Low</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="cards">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tasks Container -->
+            <section class="tasks-section">
+                <div class="tasks-header">
+                    <h2>Your Tasks</h2>
+                    <div class="task-stats">
+                        <span class="stat">
+                            <span class="stat-number" id="totalTasks">0</span>
+                            <span class="stat-label">Total</span>
+                        </span>
+                        <span class="stat">
+                            <span class="stat-number" id="completedTasks">0</span>
+                            <span class="stat-label">Completed</span>
+                        </span>
+                        <span class="stat">
+                            <span class="stat-number" id="pendingTasks">0</span>
+                            <span class="stat-label">Pending</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="tasks-container" id="tasksContainer">
+                    <!-- Tasks will be dynamically inserted here -->
+                </div>
+                
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No tasks yet</h3>
+                    <p>Create your first task to get started with AI-powered productivity!</p>
+                    <button class="btn btn-primary" onclick="openTaskModal()">
+                        <i class="fas fa-plus"></i>
+                        Add Your First Task
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Task</h2>
+                <button class="close-btn" onclick="closeTaskModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="task-form" id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Title *</label>
+                    <input type="text" id="taskTitle" name="title" required placeholder="Enter task title...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" name="description" placeholder="Enter task description..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date</label>
+                        <input type="date" id="taskDueDate" name="dueDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority" name="priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Daily Summary Modal -->
+    <div class="modal-overlay" id="summaryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Daily Summary</h2>
+                <button class="close-btn" onclick="closeSummaryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="summary-content" id="summaryContent">
+                <!-- Summary will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Suggestions Modal -->
+    <div class="modal-overlay" id="aiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AI Task Suggestions</h2>
+                <button class="close-btn" onclick="closeAiModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="ai-suggestions-content" id="aiSuggestionsContent">
+                <!-- AI suggestions will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
