@@ -2,7 +2,6 @@ from openai import OpenAI
 import streamlit as st
 import difflib
 import os
-import os
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAPI_KEY"))
